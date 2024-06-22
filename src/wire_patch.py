@@ -90,6 +90,10 @@ class NodeConnectionGraph:
         self.connections.append(connection)
         return connection
 
+    def remove_node(self, node):
+        del self.nodes[node.node_id]
+        self.connections = [c for c in self.connections if c.from_node != node and c.to_node != node]
+
     def get_node_by_id(self, node_id):
         return self.nodes[node_id]
 

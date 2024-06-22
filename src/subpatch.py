@@ -319,3 +319,23 @@ class Subpatch:
 
     def insert_into(self, patch, coords):
         SubpatchInjector(self).inject_into(patch, coords)
+
+    def remove_from(self, patch):
+        container_to_remove = None
+
+        container_nodes = SubpatchContainerNode.find_in(patch.node_graph.nodes.values())
+        for node in container_nodes:
+            if node.subpatch_name == self.name:
+                container_to_remove = node
+                break
+
+        if not container_to_remove:
+            raise SubpatchException(f'Unable to remove subpatch from patch: {self.name}')
+
+        nodes_to_remove = []
+        for node in patch.node_graph.nodes.values():
+            if container_to_remove.node_id == node.node_id or container_to_remove.contains(node):
+                nodes_to_remove.append(node)
+
+        for node in nodes_to_remove:
+            patch.node_graph.remove_node(node)
