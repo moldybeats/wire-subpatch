@@ -3,23 +3,19 @@ from .nodes import COMMENT_NODE_CLASS, HUB_NODE_CLASS
 from .wire_patch import Bounds, Coords, Node, NodeConnectionGraph, WirePatch
 
 
-class SubpatchException(Exception):
+class InvalidContainerNodeException(Exception):
     pass
 
 
-class InvalidSubpatchException(SubpatchException):
+class InvalidSubpatchException(Exception):
     pass
 
 
-class SubpatchNotFoundException(SubpatchException):
+class SubpatchNotFoundException(Exception):
     pass
 
 
-class InvalidContainerNode(SubpatchException):
-    pass
-
-
-class SubpatchInjectionException(SubpatchException):
+class SubpatchInjectionException(Exception):
     pass
 
 
@@ -28,13 +24,16 @@ class SubpatchContainerNode(Node):
         super().__init__(node_id, node_dict)
 
         if self.node_class != COMMENT_NODE_CLASS:
-            raise InvalidContainerNode('Invalid container node class')
+            raise InvalidContainerNode('Invalid container node: must be a Comment node')
 
-        text = self.attributes['text']['value']
-        if not text.startswith(Subpatch.COMMENT_PREFIX):
+        if not self.text.startswith(SubpatchContainerNode.COMMENT_PREFIX):
             raise InvalidContainerNode('Invalid container node text')
 
         lines = text.split('\n')
+
+    @property
+    def text(self):
+        return self.attributes['text']['value']
 
         self.subpatch_name = lines[0].split(Subpatch.COMMENT_PREFIX)[1].strip()
         self.description = '\n'.join(lines[1:]).strip()
@@ -194,8 +193,11 @@ class Subpatch:
         self.reset_node_ids()
 
         container_nodes = SubpatchContainerNode.find_in(self.node_graph.nodes.values())
-        if not container_nodes or len(container_nodes) > 1:
-            raise InvalidSubpatchException('Could not identify container node')
+        container_nodes = SubpatchContainerNode.find_in(self.node_graph.nodes)
+        if not container_nodes:
+            raise InvalidSubpatchException('No container node found for subpatch')
+        if len(container_nodes) > 1:
+            raise InvalidSubpatchException('Multiple container nodes found for subpatch')
 
         self.container_node = container_nodes[0]
 
@@ -290,7 +292,7 @@ class Subpatch:
                 break
 
         if not container_node:
-            raise SubpatchNotFoundException(f'Subpatch not found within patch: {subpatch_name}')
+            raise SubpatchNotFoundException(f"Subpatch '{subpatch_name}' not found within patch")
 
         node_graph = NodeConnectionGraph()
 
@@ -330,7 +332,7 @@ class Subpatch:
                 break
 
         if not container_to_remove:
-            raise SubpatchException(f'Unable to remove subpatch from patch: {self.name}')
+            raise SubpatchNotFoundException(f'Subpatch not found within patch: {self.name}')
 
         nodes_to_remove = []
         for node in patch.node_graph.nodes.values():
