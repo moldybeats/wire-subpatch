@@ -1,20 +1,24 @@
+import argparse
 import json
-import sys
 from src.subpatch import Subpatch
-from src.wire_patch import WirePatch
+from src.wire_patch import Coords, WirePatch
 
 
 if __name__ == '__main__':
-    patch_filename = sys.argv[1]
-    subpatch_name = sys.argv[2]
-    replacement_subpatch_filename = sys.argv[3]
+    parser = argparse.ArgumentParser(description='Replace a subpatch within a Wire patch.')
+    parser.add_argument('patch_filename', help='Filename of the Wire patch you want to insert into.')
+    parser.add_argument('subpatch_name', help='Name of the subpatch to replace.')
+    parser.add_argument('subpatch_filename', help='Filename of the subpatch to insert.')
+    parser.add_argument('-x', help='Coordinates where the subpatch will be inserted (x).', type=int, default=0)
+    parser.add_argument('-y', help='Coordinates where the subpatch will be inserted (y).', type=int, default=0)
+    args = parser.parse_args()
 
-    patch = WirePatch.from_file(patch_filename)
-    subpatch = Subpatch.extract_from_patch(patch, subpatch_name)
-    replacement_subpatch = Subpatch.from_file(replacement_subpatch_filename)
+    patch = WirePatch.from_file(args.patch_filename)
+    subpatch = Subpatch.extract_from_patch(patch, args.subpatch_name)
+    replacement_subpatch = Subpatch.from_file(args.subpatch_filename)
 
-    coords = subpatch.container_node.bounds.coords
     subpatch.remove_from(patch)
-    replacement_subpatch.insert_into(patch, coords)
+    xy = Coords(float(args.x), float(args.y))
+    replacement_subpatch.insert_into(patch, xy)
 
     print(json.dumps(patch.as_dict, indent='\t'))
