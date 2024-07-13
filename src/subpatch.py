@@ -1,7 +1,7 @@
 import json
 import math
 from .nodes import COMMENT_NODE_CLASS, HUB_NODE_CLASS
-from .wire_patch import Bounds, Coords, Node, NodeConnectionGraph, WirePatch
+from .wire_patch import Bounds, Coords, Node, NodeConnection, NodeConnectionGraph, WirePatch
 
 
 class InvalidContainerNodeException(Exception):
@@ -253,28 +253,26 @@ class SubpatchInjector:
 class Subpatch:
     VERSION = '0.0.1'
 
-    def __init__(self, subpatch_dict):
+    def __init__(self, subpatch_data):
         self.node_graph = NodeConnectionGraph()
 
-        nodes = subpatch_dict['nodes']
-        for node_id, node_dict in nodes.items():
-            node = self.node_graph.add_node(node_id, node_dict)
+        nodes = subpatch_data['nodes']
+        for node_id, node_data in nodes.items():
+            self.node_graph.add_node(Node(node_id, node_data))
 
-        connections = subpatch_dict['connections']
+        connections = subpatch_data['connections']
         for connection in connections:
-            from_node_id = connection['from'][0]
-            from_output = connection['from'][1]
-            from_node = self.node_graph.get_node_by_id(from_node_id)
+            from_node = self.node_graph.get_node_by_id(connection['from'][0])
+            outlet = connection['from'][1]
 
-            to_node_id = connection['to'][0]
-            to_input = connection['to'][1]
-            to_node = self.node_graph.get_node_by_id(to_node_id)
+            to_node = self.node_graph.get_node_by_id(connection['to'][0])
+            inlet = connection['to'][1]
 
-            self.node_graph.add_connection(from_node, from_output, to_node, to_input)
+            connection = NodeConnection(from_node, outlet, to_node, inlet)
+            self.node_graph.add_connection(connection)
 
         self.reset_node_ids()
 
-        container_nodes = SubpatchContainerNode.find_in(self.node_graph.nodes.values())
         container_nodes = SubpatchContainerNode.find_in(self.node_graph.nodes)
         if not container_nodes:
             raise InvalidSubpatchException('No container node found for subpatch')
@@ -283,32 +281,47 @@ class Subpatch:
 
         self.container_node = container_nodes[0]
 
-        self.name = self.container_node.subpatch_name
-        self.description = self.container_node.description
-
     def reset_node_ids(self):
         next_node_id = 0
         new_node_graph = NodeConnectionGraph()
-        new_node_id_map = {}
+        replacement_node_map = {}
 
-        for node in self.node_graph.nodes.values():
-            new_node = new_node_graph.add_node(next_node_id, node.node_dict)
-            new_node_id_map[node.node_id] = new_node
+        for node in self.node_graph.nodes:
+            old_node_id = node.node_id
+            new_node = Node(next_node_id, node.node_data)
+            new_node_graph.add_node(new_node)
+            replacement_node_map[old_node_id] = new_node
             next_node_id += 1
 
         for connection in self.node_graph.connections:
-            from_node = new_node_id_map[connection.from_node.node_id]
-            from_output = connection.from_output
-            to_node = new_node_id_map[connection.to_node.node_id]
-            to_input = connection.to_input
-            new_node_graph.add_connection(from_node, from_output, to_node, to_input)
+            old_from_node_id = connection.from_node.node_id
+            old_to_node_id = connection.to_node.node_id
+
+            new_from_node = replacement_node_map[old_from_node_id]
+            new_to_node = replacement_node_map[old_to_node_id]
+
+            connection = NodeConnection(
+                new_from_node,
+                connection.outlet,
+                new_to_node,
+                connection.inlet,
+            )
+            new_node_graph.add_connection(connection)
 
         self.node_graph = new_node_graph
 
     @property
+    def name(self):
+        return self.container_node.subpatch_name
+
+    @property
+    def description(self):
+        return self.container_node.description
+
+    @property
     def input_nodes(self):
         nodes = []
-        for node in self.node_graph.nodes.values():
+        for node in self.node_graph.nodes:
             if node.node_class == HUB_NODE_CLASS and not self.node_graph.connections_to_node(node):
                 nodes.append(node)
 
@@ -317,7 +330,7 @@ class Subpatch:
     @property
     def output_nodes(self):
         nodes = []
-        for node in self.node_graph.nodes.values():
+        for node in self.node_graph.nodes:
             if node.node_class == HUB_NODE_CLASS and not self.node_graph.connections_from_node(node):
                 nodes.append(node)
 
@@ -325,13 +338,13 @@ class Subpatch:
 
     @property
     def node_cluster_nodes(self):
-        # The "node cluster" is any node that is not an input node, an output node,
+        # The "node cluster" includes any node that is not an input node, an output node,
         # or the container node.
         input_nodes = self.input_nodes
         output_nodes = self.output_nodes
 
         nodes = []
-        for node in self.node_graph.nodes.values():
+        for node in self.node_graph.nodes:
             if node in input_nodes or node in output_nodes:
                 continue
 
@@ -349,23 +362,23 @@ class Subpatch:
             'description': self.container_node.description,
             'subpatch_version': Subpatch.VERSION,
             'connections': [c.as_dict for c in self.node_graph.connections],
-            'nodes': {n.key: n.as_dict for n in self.node_graph.nodes.values()},
+            'nodes': {str(n.node_id): n.as_dict for n in self.node_graph.nodes},
         }
 
     @staticmethod
     def from_file(filename):
         with open(filename, 'r') as f:
-            subpatch_dict = json.load(f)
+            subpatch_data = json.load(f)
 
-            subpatch_version = subpatch_dict.get('subpatch_version')
+            subpatch_version = subpatch_data.get('subpatch_version')
             if not subpatch_version:
                 raise InvalidSubpatchException('Unable to parse subpatch')
 
-            return Subpatch(subpatch_dict)
+            return Subpatch(subpatch_data)
 
     @staticmethod
     def extract_from_patch(patch, subpatch_name):
-        container_nodes = SubpatchContainerNode.find_in(patch.node_graph.nodes.values())
+        container_nodes = SubpatchContainerNode.find_in(patch.node_graph.nodes)
 
         container_node = None
         for node in container_nodes:
@@ -378,25 +391,20 @@ class Subpatch:
 
         node_graph = NodeConnectionGraph()
 
-        node_graph.add_node(container_node.node_id, container_node.node_dict)
+        node_graph.add_node(container_node)
 
-        for node in patch.node_graph.nodes.values():
+        for node in patch.node_graph.nodes:
             if container_node.contains(node):
-                node_graph.add_node(node.node_id, node.node_dict)
+                node_graph.add_node(node.clone())
 
         node_ids = node_graph.node_ids
         for connection in patch.node_graph.connections:
             if connection.from_node.node_id in node_ids and connection.to_node.node_id in node_ids:
-                node_graph.add_connection(
-                    connection.from_node,
-                    connection.from_output,
-                    connection.to_node,
-                    connection.to_input,
-                )
+                node_graph.add_connection(connection.clone())
 
         subpatch_dict = {
             'connections': [c.as_dict for c in node_graph.connections],
-            'nodes': {n.key: n.as_dict for n in node_graph.nodes.values()},
+            'nodes': {str(n.node_id): n.as_dict for n in node_graph.nodes},
         }
 
         return Subpatch(subpatch_dict)
@@ -407,7 +415,7 @@ class Subpatch:
     def remove_from(self, patch):
         container_to_remove = None
 
-        container_nodes = SubpatchContainerNode.find_in(patch.node_graph.nodes.values())
+        container_nodes = SubpatchContainerNode.find_in(patch.node_graph.nodes)
         for node in container_nodes:
             if node.subpatch_name == self.name:
                 container_to_remove = node
@@ -417,9 +425,9 @@ class Subpatch:
             raise SubpatchNotFoundException(f'Subpatch not found within patch: {self.name}')
 
         nodes_to_remove = []
-        for node in patch.node_graph.nodes.values():
+        for node in patch.node_graph.nodes:
             if container_to_remove.node_id == node.node_id or container_to_remove.contains(node):
                 nodes_to_remove.append(node)
 
         for node in nodes_to_remove:
-            patch.node_graph.remove_node(node)
+            patch.remove_node(node)
