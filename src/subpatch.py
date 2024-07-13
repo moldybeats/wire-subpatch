@@ -20,8 +20,13 @@ class SubpatchInjectionException(Exception):
 
 
 class SubpatchContainerNode(Node):
-    def __init__(self, node_id, node_dict):
-        super().__init__(node_id, node_dict)
+    """A specialized node subclass for dealing with container nodes, which are
+    always Comment nodes with text starting with "Subpatch:".
+    """
+    COMMENT_PREFIX = 'Subpatch:'
+
+    def __init__(self, node):
+        super().__init__(node.node_id, node.node_data)
 
         if self.node_class != COMMENT_NODE_CLASS:
             raise InvalidContainerNode('Invalid container node: must be a Comment node')
@@ -29,14 +34,21 @@ class SubpatchContainerNode(Node):
         if not self.text.startswith(SubpatchContainerNode.COMMENT_PREFIX):
             raise InvalidContainerNode('Invalid container node text')
 
-        lines = text.split('\n')
+        lines = self.text.split('\n')
+
+        self.subpatch_name = lines[0].split(SubpatchContainerNode.COMMENT_PREFIX)[1].strip()
+        if len(lines) > 1:
+            self.description = '\n'.join(lines[1:]).strip()
+        else:
+            self.description = ''
 
     @property
     def text(self):
         return self.attributes['text']['value']
 
-        self.subpatch_name = lines[0].split(Subpatch.COMMENT_PREFIX)[1].strip()
-        self.description = '\n'.join(lines[1:]).strip()
+    @property
+    def font_size(self):
+        return self.attributes['font-size']['value']
 
     @staticmethod
     def find_in(nodes):
@@ -46,9 +58,8 @@ class SubpatchContainerNode(Node):
 
         comment_nodes = [node for node in nodes if node.node_class == COMMENT_NODE_CLASS]
         for node in comment_nodes:
-            text = node.attributes['text']['value']
-            if text and text.startswith(Subpatch.COMMENT_PREFIX):
-                container_node = SubpatchContainerNode(node.node_id, node.node_dict)
+            container_node = SubpatchContainerNode(node)
+            if container_node.text and container_node.text.startswith(SubpatchContainerNode.COMMENT_PREFIX):
                 container_nodes.append(container_node)
 
         return container_nodes
@@ -168,7 +179,6 @@ class SubpatchInjector:
 
 
 class Subpatch:
-    COMMENT_PREFIX = 'Subpatch:'
     VERSION = '0.0.1'
 
     def __init__(self, subpatch_dict):
