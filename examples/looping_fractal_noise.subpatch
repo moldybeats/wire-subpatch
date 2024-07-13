@@ -1,25 +1,35 @@
 {
 	"name": "Looping Fractal Noise",
-	"description": "",
+	"description": "Uses 2 Fractal Noise nodes, crossfading between them to create a loop that lasts for `LoopDuration` seconds.\nTo create a perfect loop, both Fractal Noise nodes must be generating noise with exactly the same settings. Most of the node inputs are exposed as subpatch inputs and will control both nodes at once.",
 	"subpatch_version": "0.0.1",
 	"connections": [
 		{
 			"from": [
-				3,
+				2,
 				"output"
 			],
 			"to": [
-				2,
+				1,
 				"offset"
 			]
 		},
 		{
 			"from": [
-				5,
+				4,
+				"output0"
+			],
+			"to": [
+				3,
+				"frequency"
+			]
+		},
+		{
+			"from": [
+				6,
 				"output"
 			],
 			"to": [
-				4,
+				5,
 				"offset"
 			]
 		},
@@ -30,177 +40,167 @@
 			],
 			"to": [
 				6,
-				"frequency"
-			]
-		},
-		{
-			"from": [
-				2,
-				"output"
-			],
-			"to": [
-				1,
-				"input1"
-			]
-		},
-		{
-			"from": [
-				4,
-				"output"
-			],
-			"to": [
-				1,
 				"input2"
 			]
 		},
 		{
 			"from": [
-				10,
+				3,
 				"output"
 			],
 			"to": [
-				9,
-				"offset"
-			]
-		},
-		{
-			"from": [
-				12,
-				"output"
-			],
-			"to": [
-				11,
-				"offset"
-			]
-		},
-		{
-			"from": [
-				9,
-				"output"
-			],
-			"to": [
-				8,
-				"input1"
-			]
-		},
-		{
-			"from": [
-				11,
-				"output"
-			],
-			"to": [
-				8,
-				"input2"
-			]
-		},
-		{
-			"from": [
-				1,
-				"output"
-			],
-			"to": [
-				13,
-				"input2"
-			]
-		},
-		{
-			"from": [
-				8,
-				"output"
-			],
-			"to": [
-				13,
-				"input1"
-			]
-		},
-		{
-			"from": [
-				14,
-				"output0"
-			],
-			"to": [
-				10,
-				"input2"
-			]
-		},
-		{
-			"from": [
-				14,
-				"output0"
-			],
-			"to": [
-				12,
-				"input2"
-			]
-		},
-		{
-			"from": [
-				6,
-				"output"
-			],
-			"to": [
-				14,
+				7,
 				"input"
 			]
 		},
 		{
 			"from": [
-				6,
+				3,
 				"output"
+			],
+			"to": [
+				2,
+				"input2"
+			]
+		},
+		{
+			"from": [
+				9,
+				"output0"
 			],
 			"to": [
 				3,
-				"input2"
-			]
-		},
-		{
-			"from": [
-				6,
-				"output"
-			],
-			"to": [
-				5,
-				"input2"
-			]
-		},
-		{
-			"from": [
-				6,
-				"output"
-			],
-			"to": [
-				15,
-				"input0"
-			]
-		},
-		{
-			"from": [
-				15,
-				"output0"
-			],
-			"to": [
-				13,
-				"opacity2"
-			]
-		},
-		{
-			"from": [
-				17,
-				"output0"
-			],
-			"to": [
-				6,
 				"reset-phase"
 			]
 		},
 		{
 			"from": [
+				8,
+				"output0"
+			],
+			"to": [
+				4,
+				"input0"
+			]
+		},
+		{
+			"from": [
+				11,
+				"output0"
+			],
+			"to": [
+				1,
+				"gain"
+			]
+		},
+		{
+			"from": [
+				11,
+				"output0"
+			],
+			"to": [
+				5,
+				"gain"
+			]
+		},
+		{
+			"from": [
+				12,
+				"output0"
+			],
+			"to": [
+				1,
+				"octaves"
+			]
+		},
+		{
+			"from": [
+				12,
+				"output0"
+			],
+			"to": [
+				5,
+				"octaves"
+			]
+		},
+		{
+			"from": [
 				13,
+				"output0"
+			],
+			"to": [
+				1,
+				"amplitude"
+			]
+		},
+		{
+			"from": [
+				13,
+				"output0"
+			],
+			"to": [
+				5,
+				"amplitude"
+			]
+		},
+		{
+			"from": [
+				14,
+				"output0"
+			],
+			"to": [
+				1,
+				"frequency"
+			]
+		},
+		{
+			"from": [
+				14,
+				"output0"
+			],
+			"to": [
+				5,
+				"frequency"
+			]
+		},
+		{
+			"from": [
+				15,
+				"output0"
+			],
+			"to": [
+				1,
+				"density"
+			]
+		},
+		{
+			"from": [
+				15,
+				"output0"
+			],
+			"to": [
+				5,
+				"density"
+			]
+		},
+		{
+			"from": [
+				1,
 				"output"
 			],
 			"to": [
-				18,
-				"input0"
+				16,
+				"input1"
+			]
+		},
+		{
+			"from": [
+				5,
+				"output"
+			],
+			"to": [
+				16,
+				"input2"
 			]
 		},
 		{
@@ -209,8 +209,18 @@
 				"output0"
 			],
 			"to": [
-				7,
+				10,
 				"input0"
+			]
+		},
+		{
+			"from": [
+				3,
+				"output"
+			],
+			"to": [
+				16,
+				"mix"
 			]
 		}
 	],
@@ -231,14 +241,14 @@
 				},
 				"text": {
 					"type": "string",
-					"value": "Subpatch: Looping Fractal Noise"
+					"value": "Subpatch: Looping Fractal Noise\nUses 2 Fractal Noise nodes, crossfading between them to create a loop that lasts for `LoopDuration` seconds.\nTo create a perfect loop, both Fractal Noise nodes must be generating noise with exactly the same settings. Most of the node inputs are exposed as subpatch inputs and will control both nodes at once."
 				}
 			},
 			"bounds": {
-				"height": 1260.49267578125,
-				"width": 2721.729248046875,
-				"x": 2069.988525390625,
-				"y": 10.500289916992188
+				"height": 672.1489868164062,
+				"width": 2135.671142578125,
+				"x": 2582.86962890625,
+				"y": 211.84933471679688
 			},
 			"class": {
 				"id": "77697265-3C1D-467D-A722-0FC566538374",
@@ -262,90 +272,6 @@
 					"type": "integer",
 					"value": 0
 				},
-				"input-count": {
-					"type": "integer",
-					"value": 2
-				},
-				"instances": {
-					"type": "integer",
-					"value": 1
-				},
-				"resolution-absolute": {
-					"type": "float2",
-					"value": [
-						1920,
-						1080
-					]
-				},
-				"resolution-mode": {
-					"type": "integer",
-					"value": 0
-				},
-				"resolution-relative": {
-					"type": "float2",
-					"value": [
-						1,
-						1
-					]
-				}
-			},
-			"bounds": {
-				"height": 130,
-				"width": 195,
-				"x": 3827.982177734375,
-				"y": 193.41188049316406
-			},
-			"class": {
-				"id": "77697265-A270-4D60-911C-A88B1BE6369A",
-				"version": 3
-			},
-			"clock": "video",
-			"color": "ffff6a00",
-			"constants": {
-				"bypass": {
-					"type": "bool",
-					"value": false
-				},
-				"input1": {
-					"type": "texture2d",
-					"value": null
-				},
-				"input2": {
-					"type": "texture2d",
-					"value": null
-				},
-				"mode": {
-					"type": "integer",
-					"value": 11
-				},
-				"opacity1": {
-					"type": "float",
-					"value": 1
-				},
-				"opacity2": {
-					"type": "float",
-					"value": 0.3858819901943207
-				}
-			},
-			"hidden": [
-				"bypass",
-				"input-count",
-				"mode",
-				"resolution-mode",
-				"resolution-relative",
-				"resolution-absolute",
-				"bitdepth",
-				"instances"
-			],
-			"name": "Video Mixer",
-			"thumbnail_visible": true
-		},
-		"2": {
-			"attributes": {
-				"bitdepth": {
-					"type": "integer",
-					"value": 0
-				},
 				"instances": {
 					"type": "integer",
 					"value": 1
@@ -372,8 +298,8 @@
 			"bounds": {
 				"height": 226,
 				"width": 195,
-				"x": 3581.74072265625,
-				"y": 67.50028991699219
+				"x": 3970.85302734375,
+				"y": 328.7215576171875
 			},
 			"class": {
 				"id": "77697265-E404-464F-A4C8-FF262AB15588",
@@ -388,7 +314,7 @@
 				},
 				"amplitude": {
 					"type": "float",
-					"value": 0.6462640166282654
+					"value": 0.800000011920929
 				},
 				"bypass": {
 					"type": "bool",
@@ -404,7 +330,7 @@
 				},
 				"density": {
 					"type": "float",
-					"value": 5
+					"value": 10
 				},
 				"frequency": {
 					"type": "float",
@@ -420,7 +346,7 @@
 				},
 				"octaves": {
 					"type": "integer",
-					"value": 3
+					"value": 4
 				},
 				"offset": {
 					"type": "float3",
@@ -442,231 +368,68 @@
 				"instances"
 			],
 			"name": "Fractal Noise",
+			"thumbnail_visible": true
+		},
+		"2": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "signal"
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "float"
+				},
+				"input1-type": {
+					"type": "type",
+					"value": "float"
+				},
+				"input2-type": {
+					"type": "type",
+					"value": "float"
+				},
+				"instances": {
+					"type": "integer",
+					"value": 1
+				}
+			},
+			"bounds": {
+				"height": 106,
+				"width": 195,
+				"x": 3715.85302734375,
+				"y": 328.5484619140625
+			},
+			"class": {
+				"id": "77697265-CD40-419E-A3E4-84B7CBA9E961",
+				"version": 1
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0
+				},
+				"input1": {
+					"type": "float",
+					"value": 0
+				},
+				"input2": {
+					"type": "float",
+					"value": 0
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"input1-type",
+				"input2-type",
+				"flow",
+				"instances"
+			],
+			"name": "Float3",
 			"thumbnail_visible": true
 		},
 		"3": {
-			"attributes": {
-				"flow": {
-					"type": "flow",
-					"value": "signal"
-				},
-				"input0-type": {
-					"type": "type",
-					"value": "float"
-				},
-				"input1-type": {
-					"type": "type",
-					"value": "float"
-				},
-				"input2-type": {
-					"type": "type",
-					"value": "float"
-				},
-				"instances": {
-					"type": "integer",
-					"value": 1
-				}
-			},
-			"bounds": {
-				"height": 106,
-				"width": 195,
-				"x": 3326.74072265625,
-				"y": 67.910888671875
-			},
-			"class": {
-				"id": "77697265-CD40-419E-A3E4-84B7CBA9E961",
-				"version": 1
-			},
-			"clock": "video",
-			"color": "ffff6a00",
-			"constants": {
-				"input0": {
-					"type": "float",
-					"value": 0
-				},
-				"input1": {
-					"type": "float",
-					"value": 0
-				},
-				"input2": {
-					"type": "float",
-					"value": 0
-				}
-			},
-			"hidden": [
-				"input0-type",
-				"input1-type",
-				"input2-type",
-				"flow",
-				"instances"
-			],
-			"name": "Float3",
-			"thumbnail_visible": true
-		},
-		"4": {
-			"attributes": {
-				"bitdepth": {
-					"type": "integer",
-					"value": 0
-				},
-				"instances": {
-					"type": "integer",
-					"value": 1
-				},
-				"resolution-absolute": {
-					"type": "float2",
-					"value": [
-						1920,
-						1080
-					]
-				},
-				"resolution-mode": {
-					"type": "integer",
-					"value": 0
-				},
-				"resolution-relative": {
-					"type": "float2",
-					"value": [
-						1,
-						1
-					]
-				}
-			},
-			"bounds": {
-				"height": 226,
-				"width": 195,
-				"x": 3581.74072265625,
-				"y": 323.5002746582031
-			},
-			"class": {
-				"id": "77697265-E404-464F-A4C8-FF262AB15588",
-				"version": 1
-			},
-			"clock": "video",
-			"color": "ffff6a00",
-			"constants": {
-				"algorithm": {
-					"type": "integer",
-					"value": 1
-				},
-				"amplitude": {
-					"type": "float",
-					"value": 0.22820299863815308
-				},
-				"bypass": {
-					"type": "bool",
-					"value": false
-				},
-				"channels": {
-					"type": "integer",
-					"value": 1
-				},
-				"clamp": {
-					"type": "bool",
-					"value": true
-				},
-				"density": {
-					"type": "float",
-					"value": 4
-				},
-				"frequency": {
-					"type": "float",
-					"value": 2.182413101196289
-				},
-				"gain": {
-					"type": "float",
-					"value": 2
-				},
-				"modifier": {
-					"type": "integer",
-					"value": 1
-				},
-				"octaves": {
-					"type": "integer",
-					"value": 2
-				},
-				"offset": {
-					"type": "float3",
-					"value": [
-						0,
-						0,
-						0
-					]
-				}
-			},
-			"hidden": [
-				"bypass",
-				"algorithm",
-				"clamp",
-				"resolution-mode",
-				"resolution-relative",
-				"resolution-absolute",
-				"bitdepth",
-				"instances"
-			],
-			"name": "Fractal Noise",
-			"thumbnail_visible": true
-		},
-		"5": {
-			"attributes": {
-				"flow": {
-					"type": "flow",
-					"value": "signal"
-				},
-				"input0-type": {
-					"type": "type",
-					"value": "float"
-				},
-				"input1-type": {
-					"type": "type",
-					"value": "float"
-				},
-				"input2-type": {
-					"type": "type",
-					"value": "float"
-				},
-				"instances": {
-					"type": "integer",
-					"value": 1
-				}
-			},
-			"bounds": {
-				"height": 106,
-				"width": 195,
-				"x": 3326.74072265625,
-				"y": 323.6911926269531
-			},
-			"class": {
-				"id": "77697265-CD40-419E-A3E4-84B7CBA9E961",
-				"version": 1
-			},
-			"clock": "video",
-			"color": "ffff6a00",
-			"constants": {
-				"input0": {
-					"type": "float",
-					"value": 0
-				},
-				"input1": {
-					"type": "float",
-					"value": 0
-				},
-				"input2": {
-					"type": "float",
-					"value": 0
-				}
-			},
-			"hidden": [
-				"input0-type",
-				"input1-type",
-				"input2-type",
-				"flow",
-				"instances"
-			],
-			"name": "Float3",
-			"thumbnail_visible": true
-		},
-		"6": {
 			"attributes": {
 				"anti-alias": {
 					"type": "bool",
@@ -684,8 +447,8 @@
 			"bounds": {
 				"height": 154,
 				"width": 195,
-				"x": 2677.48291015625,
-				"y": 572.5880126953125
+				"x": 3205.85302734375,
+				"y": 443.19781494140625
 			},
 			"class": {
 				"id": "77697265-F95F-41D8-8FC4-DF0DC56E1051",
@@ -700,7 +463,7 @@
 				},
 				"frequency": {
 					"type": "float",
-					"value": 0.03333299979567528
+					"value": 0.3333333432674408
 				},
 				"offset": {
 					"type": "float",
@@ -723,7 +486,7 @@
 			"name": "Saw",
 			"thumbnail_visible": true
 		},
-		"7": {
+		"4": {
 			"attributes": {
 				"flow": {
 					"type": "flow",
@@ -741,8 +504,8 @@
 			"bounds": {
 				"height": 30,
 				"width": 195,
-				"x": 2352.617919921875,
-				"y": 572.1220092773438
+				"x": 2950.85302734375,
+				"y": 443.19781494140625
 			},
 			"class": {
 				"id": "77697265-8061-467F-B375-DB03FFF5ED40",
@@ -753,7 +516,7 @@
 			"constants": {
 				"input0": {
 					"type": "float",
-					"value": 20
+					"value": 3
 				}
 			},
 			"hidden": [
@@ -764,91 +527,7 @@
 			"name": "1 / x",
 			"thumbnail_visible": true
 		},
-		"8": {
-			"attributes": {
-				"bitdepth": {
-					"type": "integer",
-					"value": 0
-				},
-				"input-count": {
-					"type": "integer",
-					"value": 2
-				},
-				"instances": {
-					"type": "integer",
-					"value": 1
-				},
-				"resolution-absolute": {
-					"type": "float2",
-					"value": [
-						1920,
-						1080
-					]
-				},
-				"resolution-mode": {
-					"type": "integer",
-					"value": 0
-				},
-				"resolution-relative": {
-					"type": "float2",
-					"value": [
-						1,
-						1
-					]
-				}
-			},
-			"bounds": {
-				"height": 130,
-				"width": 195,
-				"x": 3827.982177734375,
-				"y": 884.9044189453125
-			},
-			"class": {
-				"id": "77697265-A270-4D60-911C-A88B1BE6369A",
-				"version": 3
-			},
-			"clock": "video",
-			"color": "ffff6a00",
-			"constants": {
-				"bypass": {
-					"type": "bool",
-					"value": false
-				},
-				"input1": {
-					"type": "texture2d",
-					"value": null
-				},
-				"input2": {
-					"type": "texture2d",
-					"value": null
-				},
-				"mode": {
-					"type": "integer",
-					"value": 11
-				},
-				"opacity1": {
-					"type": "float",
-					"value": 1
-				},
-				"opacity2": {
-					"type": "float",
-					"value": 0.3858819901943207
-				}
-			},
-			"hidden": [
-				"bypass",
-				"input-count",
-				"mode",
-				"resolution-mode",
-				"resolution-relative",
-				"resolution-absolute",
-				"bitdepth",
-				"instances"
-			],
-			"name": "Video Mixer",
-			"thumbnail_visible": true
-		},
-		"9": {
+		"5": {
 			"attributes": {
 				"bitdepth": {
 					"type": "integer",
@@ -880,8 +559,8 @@
 			"bounds": {
 				"height": 226,
 				"width": 195,
-				"x": 3581.74072265625,
-				"y": 758.9928588867188
+				"x": 3970.85302734375,
+				"y": 601.2216796875
 			},
 			"class": {
 				"id": "77697265-E404-464F-A4C8-FF262AB15588",
@@ -896,7 +575,7 @@
 				},
 				"amplitude": {
 					"type": "float",
-					"value": 0.6462640166282654
+					"value": 0.800000011920929
 				},
 				"bypass": {
 					"type": "bool",
@@ -912,7 +591,7 @@
 				},
 				"density": {
 					"type": "float",
-					"value": 5
+					"value": 10
 				},
 				"frequency": {
 					"type": "float",
@@ -928,171 +607,8 @@
 				},
 				"octaves": {
 					"type": "integer",
-					"value": 3
-				},
-				"offset": {
-					"type": "float3",
-					"value": [
-						0,
-						0,
-						0
-					]
-				}
-			},
-			"hidden": [
-				"bypass",
-				"algorithm",
-				"clamp",
-				"resolution-mode",
-				"resolution-relative",
-				"resolution-absolute",
-				"bitdepth",
-				"instances"
-			],
-			"name": "Fractal Noise",
-			"thumbnail_visible": true
-		},
-		"10": {
-			"attributes": {
-				"flow": {
-					"type": "flow",
-					"value": "signal"
-				},
-				"input0-type": {
-					"type": "type",
-					"value": "float"
-				},
-				"input1-type": {
-					"type": "type",
-					"value": "float"
-				},
-				"input2-type": {
-					"type": "type",
-					"value": "float"
-				},
-				"instances": {
-					"type": "integer",
-					"value": 1
-				}
-			},
-			"bounds": {
-				"height": 106,
-				"width": 195,
-				"x": 3326.74072265625,
-				"y": 759.4034423828125
-			},
-			"class": {
-				"id": "77697265-CD40-419E-A3E4-84B7CBA9E961",
-				"version": 1
-			},
-			"clock": "video",
-			"color": "ffff6a00",
-			"constants": {
-				"input0": {
-					"type": "float",
-					"value": 0
-				},
-				"input1": {
-					"type": "float",
-					"value": 0
-				},
-				"input2": {
-					"type": "float",
-					"value": 0
-				}
-			},
-			"hidden": [
-				"input0-type",
-				"input1-type",
-				"input2-type",
-				"flow",
-				"instances"
-			],
-			"name": "Float3",
-			"thumbnail_visible": true
-		},
-		"11": {
-			"attributes": {
-				"bitdepth": {
-					"type": "integer",
-					"value": 0
-				},
-				"instances": {
-					"type": "integer",
-					"value": 1
-				},
-				"resolution-absolute": {
-					"type": "float2",
-					"value": [
-						1920,
-						1080
-					]
-				},
-				"resolution-mode": {
-					"type": "integer",
-					"value": 0
-				},
-				"resolution-relative": {
-					"type": "float2",
-					"value": [
-						1,
-						1
-					]
-				}
-			},
-			"bounds": {
-				"height": 226,
-				"width": 195,
-				"x": 3581.74072265625,
-				"y": 1014.9928588867188
-			},
-			"class": {
-				"id": "77697265-E404-464F-A4C8-FF262AB15588",
-				"version": 1
-			},
-			"clock": "video",
-			"color": "ffff6a00",
-			"constants": {
-				"algorithm": {
-					"type": "integer",
-					"value": 1
-				},
-				"amplitude": {
-					"type": "float",
-					"value": 0.22820299863815308
-				},
-				"bypass": {
-					"type": "bool",
-					"value": false
-				},
-				"channels": {
-					"type": "integer",
-					"value": 1
-				},
-				"clamp": {
-					"type": "bool",
-					"value": true
-				},
-				"density": {
-					"type": "float",
 					"value": 4
 				},
-				"frequency": {
-					"type": "float",
-					"value": 2.182413101196289
-				},
-				"gain": {
-					"type": "float",
-					"value": 2
-				},
-				"modifier": {
-					"type": "integer",
-					"value": 1
-				},
-				"octaves": {
-					"type": "integer",
-					"value": 2
-				},
 				"offset": {
 					"type": "float3",
 					"value": [
@@ -1115,7 +631,7 @@
 			"name": "Fractal Noise",
 			"thumbnail_visible": true
 		},
-		"12": {
+		"6": {
 			"attributes": {
 				"flow": {
 					"type": "flow",
@@ -1141,8 +657,8 @@
 			"bounds": {
 				"height": 106,
 				"width": 195,
-				"x": 3326.74072265625,
-				"y": 1015.1837768554688
+				"x": 3715.85302734375,
+				"y": 601.048583984375
 			},
 			"class": {
 				"id": "77697265-CD40-419E-A3E4-84B7CBA9E961",
@@ -1174,91 +690,7 @@
 			"name": "Float3",
 			"thumbnail_visible": true
 		},
-		"13": {
-			"attributes": {
-				"bitdepth": {
-					"type": "integer",
-					"value": 0
-				},
-				"input-count": {
-					"type": "integer",
-					"value": 2
-				},
-				"instances": {
-					"type": "integer",
-					"value": 1
-				},
-				"resolution-absolute": {
-					"type": "float2",
-					"value": [
-						1920,
-						1080
-					]
-				},
-				"resolution-mode": {
-					"type": "integer",
-					"value": 0
-				},
-				"resolution-relative": {
-					"type": "float2",
-					"value": [
-						1,
-						1
-					]
-				}
-			},
-			"bounds": {
-				"height": 130,
-				"width": 195,
-				"x": 4300.12255859375,
-				"y": 525.5140991210938
-			},
-			"class": {
-				"id": "77697265-A270-4D60-911C-A88B1BE6369A",
-				"version": 3
-			},
-			"clock": "video",
-			"color": "ffff6a00",
-			"constants": {
-				"bypass": {
-					"type": "bool",
-					"value": false
-				},
-				"input1": {
-					"type": "texture2d",
-					"value": null
-				},
-				"input2": {
-					"type": "texture2d",
-					"value": null
-				},
-				"mode": {
-					"type": "integer",
-					"value": 11
-				},
-				"opacity1": {
-					"type": "float",
-					"value": 1
-				},
-				"opacity2": {
-					"type": "float",
-					"value": 0
-				}
-			},
-			"hidden": [
-				"bypass",
-				"input-count",
-				"mode",
-				"resolution-mode",
-				"resolution-relative",
-				"resolution-absolute",
-				"bitdepth",
-				"instances"
-			],
-			"name": "Video Mixer",
-			"thumbnail_visible": true
-		},
-		"14": {
+		"7": {
 			"attributes": {
 				"flow": {
 					"type": "flow",
@@ -1316,8 +748,8 @@
 			"bounds": {
 				"height": 154,
 				"width": 195,
-				"x": 3030.83349609375,
-				"y": 937.8952026367188
+				"x": 3460.85302734375,
+				"y": 600.0009155273438
 			},
 			"class": {
 				"id": "77697265-992D-4044-82DC-D2E0D30DF78E",
@@ -1369,11 +801,11 @@
 			"name": "Map",
 			"thumbnail_visible": true
 		},
-		"15": {
+		"8": {
 			"attributes": {
 				"flow": {
 					"type": "flow",
-					"value": "signal"
+					"value": "event"
 				},
 				"input0-dimensions": {
 					"type": "integer",
@@ -1387,49 +819,8 @@
 			"bounds": {
 				"height": 30,
 				"width": 195,
-				"x": 4035.4794921875,
-				"y": 576.4815673828125
-			},
-			"class": {
-				"id": "77697265-326F-4351-83FC-7A7FCFEDAFFC",
-				"version": 1
-			},
-			"clock": "video",
-			"color": "ffff6a00",
-			"constants": {
-				"input0": {
-					"type": "float",
-					"value": 0
-				}
-			},
-			"hidden": [
-				"input0-type",
-				"flow",
-				"input0-dimensions"
-			],
-			"name": "1 - x",
-			"thumbnail_visible": true
-		},
-		"16": {
-			"attributes": {
-				"flow": {
-					"type": "flow",
-					"value": "event"
-				},
-				"input0-dimensions": {
-					"type": "integer",
-					"value": 1
-				},
-				"input0-type": {
-					"type": "type",
-					"value": "float"
-				}
-			},
-			"bounds": {
-				"height": 30.021047592163086,
-				"width": 195,
-				"x": 2099.988525390625,
-				"y": 572.522705078125
+				"x": 2695.85302734375,
+				"y": 443.19781494140625
 			},
 			"class": {
 				"id": "77697265-AEE3-4B9D-BBD5-6Ae4CCD5aB30",
@@ -1440,7 +831,7 @@
 			"constants": {
 				"input0": {
 					"type": "float",
-					"value": 0
+					"value": 3
 				}
 			},
 			"hidden": [
@@ -1448,10 +839,10 @@
 				"flow",
 				"input0-dimensions"
 			],
-			"name": "LoopDuration",
+			"name": "LoopDuration (sec)",
 			"thumbnail_visible": true
 		},
-		"17": {
+		"9": {
 			"attributes": {
 				"flow": {
 					"type": "flow",
@@ -1467,10 +858,10 @@
 				}
 			},
 			"bounds": {
-				"height": 30.021047592163086,
+				"height": 30,
 				"width": 195,
-				"x": 2099.988525390625,
-				"y": 692.6068725585938
+				"x": 2695.565673828125,
+				"y": 494.2809143066406
 			},
 			"class": {
 				"id": "77697265-AEE3-4B9D-BBD5-6Ae4CCD5aB30",
@@ -1492,7 +883,7 @@
 			"name": "ResetPhase",
 			"thumbnail_visible": true
 		},
-		"18": {
+		"10": {
 			"attributes": {
 				"flow": {
 					"type": "flow",
@@ -1508,10 +899,10 @@
 				}
 			},
 			"bounds": {
-				"height": 30.021047592163086,
+				"height": 30,
 				"width": 195,
-				"x": 4566.7177734375,
-				"y": 525.8233032226562
+				"x": 4476.55908203125,
+				"y": 491.8529052734375
 			},
 			"class": {
 				"id": "77697265-AEE3-4B9D-BBD5-6Ae4CCD5aB30",
@@ -1531,6 +922,270 @@
 				"input0-dimensions"
 			],
 			"name": "Output",
+			"thumbnail_visible": true
+		},
+		"11": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "event"
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "float"
+				}
+			},
+			"bounds": {
+				"height": 29.786788940429688,
+				"width": 195,
+				"x": 2695.775390625,
+				"y": 544.281494140625
+			},
+			"class": {
+				"id": "77697265-AEE3-4B9D-BBD5-6Ae4CCD5aB30",
+				"version": 2
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions"
+			],
+			"name": "Gain",
+			"thumbnail_visible": true
+		},
+		"12": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "event"
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "float"
+				}
+			},
+			"bounds": {
+				"height": 29.786788940429688,
+				"width": 195,
+				"x": 2695.775390625,
+				"y": 597.508056640625
+			},
+			"class": {
+				"id": "77697265-AEE3-4B9D-BBD5-6Ae4CCD5aB30",
+				"version": 2
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions"
+			],
+			"name": "Octaves",
+			"thumbnail_visible": true
+		},
+		"13": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "event"
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "float"
+				}
+			},
+			"bounds": {
+				"height": 29.786788940429688,
+				"width": 195,
+				"x": 2695.775390625,
+				"y": 646.5994262695312
+			},
+			"class": {
+				"id": "77697265-AEE3-4B9D-BBD5-6Ae4CCD5aB30",
+				"version": 2
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions"
+			],
+			"name": "Amplitude",
+			"thumbnail_visible": true
+		},
+		"14": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "event"
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "float"
+				}
+			},
+			"bounds": {
+				"height": 30.311656951904297,
+				"width": 195,
+				"x": 2694.771728515625,
+				"y": 693.5968017578125
+			},
+			"class": {
+				"id": "77697265-AEE3-4B9D-BBD5-6Ae4CCD5aB30",
+				"version": 2
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions"
+			],
+			"name": "Frequency",
+			"thumbnail_visible": true
+		},
+		"15": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "event"
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "float"
+				}
+			},
+			"bounds": {
+				"height": 29.35742950439453,
+				"width": 195,
+				"x": 2694.6025390625,
+				"y": 745.2234497070312
+			},
+			"class": {
+				"id": "77697265-AEE3-4B9D-BBD5-6Ae4CCD5aB30",
+				"version": 2
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions"
+			],
+			"name": "Density",
+			"thumbnail_visible": true
+		},
+		"16": {
+			"attributes": {
+				"input1-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input1-type": {
+					"type": "type",
+					"value": "texture2d"
+				},
+				"input2-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input2-type": {
+					"type": "type",
+					"value": "texture2d"
+				},
+				"mix-dimensions": {
+					"type": "integer",
+					"value": 1
+				}
+			},
+			"bounds": {
+				"height": 107.57777404785156,
+				"width": 195,
+				"x": 4226.78662109375,
+				"y": 491.1464538574219
+			},
+			"class": {
+				"id": "77697265-7BAA-481B-8F7C-A32F6DBE1518",
+				"version": 2
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input1": {
+					"type": "texture2d",
+					"value": null
+				},
+				"input2": {
+					"type": "texture2d",
+					"value": null
+				},
+				"mix": {
+					"type": "float",
+					"value": 0
+				}
+			},
+			"hidden": [
+				"input1-type",
+				"input2-type",
+				"input1-dimensions",
+				"input2-dimensions",
+				"mix-dimensions"
+			],
+			"name": "Cross Fader",
 			"thumbnail_visible": true
 		}
 	}
