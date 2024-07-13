@@ -1,4 +1,5 @@
 import json
+import math
 from .nodes import COMMENT_NODE_CLASS, HUB_NODE_CLASS
 from .wire_patch import Bounds, Coords, Node, NodeConnectionGraph, WirePatch
 
@@ -66,6 +67,8 @@ class SubpatchContainerNode(Node):
 
 
 class SubpatchInjector:
+    """A class that handles the process of injecting a subpatch into an existing Wire patch."""
+
     HEADER_MIN_HEIGHT = 50.0
     LEFT_MARGIN = 10.0
     RIGHT_MARGIN = 10.0
@@ -74,108 +77,177 @@ class SubpatchInjector:
     OUTPUT_NODE_VERT_SPACING = 5.0
     OUTPUT_NODE_CONNECTION_MARGIN = 10.0
     FOOTER_HEIGHT = 10.0
+    DESCRIPTION_CHAR_WIDTH = 6.8
+    DESCRIPTION_LINE_PADDING = 3
 
     def __init__(self, subpatch):
         self.subpatch = subpatch
-        self.input_node_column_bounds = self._get_input_node_column_bounds()
-        self.node_cluster_column_bounds = self._get_node_cluster_column_bounds()
-        self.output_node_column_bounds = self._get_output_node_column_bounds()
-        self.container_bounds = self._get_container_bounds()
 
-    def _get_input_node_column_bounds(self):
-        xy = Coords(self.LEFT_MARGIN, self.HEADER_MIN_HEIGHT)
+        input_node_column_dimensions = self._get_input_node_column_dimensions()
+        node_cluster_column_dimensions = self._get_node_cluster_column_dimensions()
+        output_node_column_dimensions = self._get_output_node_column_dimensions()
+        container_width = self._get_container_width(
+            input_node_column_dimensions[0],
+            node_cluster_column_dimensions[0],
+            output_node_column_dimensions[0],
+        )
+        container_header_height = self._get_container_header_height(container_width)
+        container_height = self._get_container_height(
+            container_header_height,
+            input_node_column_dimensions[1],
+            node_cluster_column_dimensions[1],
+            output_node_column_dimensions[1],
+        )
 
-        nodes = self.subpatch.input_nodes
-        if not nodes:
-            return Bounds(xy, 0.0, 0.0)
-
-        max_node_width = max([node.bounds.width for node in nodes])
-        column_height = sum([(node.bounds.height + self.INPUT_NODE_VERT_SPACING) for node in nodes])
-
-        return Bounds(xy, max_node_width, column_height)
-
-    def _get_node_cluster_column_bounds(self):
-        xy = self.input_node_column_bounds.coords + \
-             Coords(self.input_node_column_bounds.width, 0.0) + \
-             Coords(self.INPUT_NODE_CONNECTION_MARGIN, 0.0)
-
-        nodes = self.subpatch.node_cluster_nodes
-        if not nodes:
-            return Bounds(xy, 0.0, 0.0)
-
-        max_width = max([node.bounds.width for node in nodes])
-        max_height = max([node.bounds.height for node in nodes])
-
-        return Bounds(xy, max_width, max_height)
-
-    def _get_output_node_column_bounds(self):
-        xy = self.node_cluster_column_bounds.coords + \
-             Coords(self.node_cluster_column_bounds.width, 0.0) + \
-             Coords(self.OUTPUT_NODE_CONNECTION_MARGIN, 0.0)
-
-        nodes = self.subpatch.output_nodes
-        if not nodes:
-            return Bounds(xy, 0.0, 0.0)
-
-        max_node_width = max([node.bounds.width for node in nodes])
-        column_height = sum([(node.bounds.height + self.OUTPUT_NODE_VERT_SPACING) for node in nodes])
-
-        return Bounds(xy, max_node_width, column_height)
-
-    def _get_container_bounds(self):
         xy = Coords(0.0, 0.0)
+        self.container_bounds = Bounds(xy, container_width, container_height)
 
-        width = 0.0
-        width += self.LEFT_MARGIN
+        xy = Coords(self.LEFT_MARGIN, container_header_height)
+        self.input_node_column_bounds = Bounds(xy,
+            input_node_column_dimensions[0],
+            input_node_column_dimensions[1],
+        )
+
+        xy = self.input_node_column_bounds.coords
         if self.input_node_column_bounds.has_width:
-            width += self.input_node_column_bounds.width + self.INPUT_NODE_CONNECTION_MARGIN
+            xy += Coords(self.input_node_column_bounds.width, 0.0) + \
+                  Coords(self.INPUT_NODE_CONNECTION_MARGIN, 0.0)
+        self.node_cluster_column_bounds = Bounds(xy,
+            node_cluster_column_dimensions[0],
+            node_cluster_column_dimensions[1],
+        )
+
+        xy = self.node_cluster_column_bounds.coords
         if self.node_cluster_column_bounds.has_width:
-            width += self.node_cluster_column_bounds.width + self.OUTPUT_NODE_CONNECTION_MARGIN
-        if self.output_node_column_bounds.has_width:
-            width += self.output_node_column_bounds.width
+            xy += Coords(self.node_cluster_column_bounds.width, 0.0) + \
+                  Coords(self.OUTPUT_NODE_CONNECTION_MARGIN, 0.0)
+        self.output_node_column_bounds = Bounds(xy,
+            output_node_column_dimensions[0],
+            output_node_column_dimensions[1],
+        )
+
+    def _get_input_node_column_dimensions(self):
+        nodes = self.subpatch.input_nodes
+        if nodes:
+            width = max([node.bounds.width for node in nodes])
+            height = sum([(node.bounds.height + self.INPUT_NODE_VERT_SPACING) for node in nodes])
+        else:
+            width = 0.0
+            height = 0.0
+
+        return width, height
+
+    def _get_node_cluster_column_dimensions(self):
+        nodes = self.subpatch.node_cluster_nodes
+        if nodes:
+            width = max([node.bounds.width for node in nodes])
+            height = max([node.bounds.height for node in nodes])
+        else:
+            width = 0.0
+            height = 0.0
+
+        return width, height
+
+    def _get_output_node_column_dimensions(self):
+        nodes = self.subpatch.output_nodes
+        if nodes:
+            width = max([node.bounds.width for node in nodes])
+            height = sum([(node.bounds.height + self.OUTPUT_NODE_VERT_SPACING) for node in nodes])
+        else:
+            width = 0.0
+            height = 0.0
+
+        return width, height
+
+    def _get_container_width(self,
+                             input_node_column_width,
+                             node_cluster_column_width,
+                             output_node_column_width):
+        width = self.LEFT_MARGIN
+        if input_node_column_width > 0.0:
+            width += input_node_column_width + self.INPUT_NODE_CONNECTION_MARGIN
+        if node_cluster_column_width > 0.0:
+            width += node_cluster_column_width + self.OUTPUT_NODE_CONNECTION_MARGIN
+        if output_node_column_width > 0.0:
+            width += output_node_column_width
         width += self.RIGHT_MARGIN
 
+        return width
+
+    def _get_container_header_height(self, container_width):
+        # When calculating the container node header height, we need to take the
+        # entire text of the container node into account.
         height = 0.0
-        height += self.HEADER_MIN_HEIGHT
-        input_col_height = self.input_node_column_bounds.height
-        cluster_col_height = self.node_cluster_column_bounds.height
-        output_col_height = self.output_node_column_bounds.height
-        height += max([input_col_height, cluster_col_height, output_col_height])
+        text = self.subpatch.container_node.text
+        if text:
+            chars_per_line = math.ceil(container_width / self.DESCRIPTION_CHAR_WIDTH)
+            font_size = self.subpatch.container_node.font_size
+            description_lines = text.split('\n')
+            for line in description_lines:
+                n_lines = math.ceil(len(line) / chars_per_line)
+                height += n_lines * (font_size + self.DESCRIPTION_LINE_PADDING)
+
+        if height < self.HEADER_MIN_HEIGHT:
+            height = self.HEADER_MIN_HEIGHT
+
+        return height
+
+    def _get_container_height(self,
+                              container_header_height,
+                              input_node_column_height,
+                              node_cluster_column_height,
+                              output_node_column_height):
+        height = container_header_height
+        height += max([
+            input_node_column_height,
+            node_cluster_column_height,
+            output_node_column_height,
+        ])
         height += self.FOOTER_HEIGHT
 
-        return Bounds(xy, width, height)
+        return height
 
     def inject_into(self, patch, coords):
         new_node_id_map = {}
 
         xy = coords + self.container_bounds.coords
-        new_container_node = patch.add_node(self.subpatch.container_node, xy)
-        new_node_id_map[new_container_node.node_id] = new_container_node
+        next_node_id = patch.next_node_id
+
+        new_container_node = Node(next_node_id, self.subpatch.container_node.node_data)
+        patch.add_node(new_container_node, xy)
+        new_node_id_map[self.subpatch.container_node.node_id] = new_container_node
         new_container_node.resize(self.container_bounds.width, self.container_bounds.height)
+        next_node_id += 1
 
         xy = coords + self.input_node_column_bounds.coords
         for node in self.subpatch.input_nodes:
-            new_node = patch.add_node(node, xy)
+            new_node = Node(next_node_id, node.node_data)
+            patch.add_node(new_node, xy)
             new_node_id_map[node.node_id] = new_node
             xy += Coords(0.0, new_node.bounds.height + self.INPUT_NODE_VERT_SPACING)
+            next_node_id += 1
 
         xy = coords + self.node_cluster_column_bounds.coords
         for node in self.subpatch.node_cluster_nodes:
-            new_node = patch.add_node(node, xy)
+            new_node = Node(next_node_id, node.node_data)
+            patch.add_node(new_node, xy)
             new_node_id_map[node.node_id] = new_node
+            next_node_id += 1
 
         xy = coords + self.output_node_column_bounds.coords
         for node in self.subpatch.output_nodes:
-            new_node = patch.add_node(node, xy)
+            new_node = Node(next_node_id, node.node_data)
+            patch.add_node(new_node, xy)
             new_node_id_map[node.node_id] = new_node
             xy += Coords(0.0, new_node.bounds.height + self.OUTPUT_NODE_VERT_SPACING)
 
         for connection in self.subpatch.node_graph.connections:
             from_node = new_node_id_map[connection.from_node.node_id]
-            from_output = connection.from_output
+            outlet = connection.outlet
             to_node = new_node_id_map[connection.to_node.node_id]
-            to_input = connection.to_input
-            patch.add_connection(from_node, from_output, to_node, to_input)
+            inlet = connection.inlet
+            connection = NodeConnection(from_node, outlet, to_node, inlet)
+            patch.add_connection(connection)
 
 
 class Subpatch:
