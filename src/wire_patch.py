@@ -2,6 +2,10 @@ import json
 from .nodes import NODE_CLASS_NAMES
 
 
+class InvalidNode(Exception):
+    pass
+
+
 class Coords:
     def __init__(self, x, y):
         self.x = x
@@ -49,6 +53,56 @@ class Bounds:
                self.upper_left.y < bounds.upper_left.y and \
                self.bottom_right.x > bounds.bottom_right.x and \
                self.bottom_right.y > bounds.bottom_right.y
+
+
+class Node:
+    def __init__(self, node_id, node_data):
+        try:
+            self.node_id = int(node_id)
+        except ValueError:
+            raise InvalidNode(f'Invalid node_id: {node_id}')
+
+        self.node_data = node_data
+        self.name = node_data['name']
+        self.node_class = node_data['class']['id']
+        self.node_type = NODE_CLASS_NAMES[self.node_class]
+        self.bounds = self.get_bounds()
+
+    def move_to(self, coords):
+        self.node_data['bounds']['x'] = coords.x
+        self.node_data['bounds']['y'] = coords.y
+        self.bounds = self.get_bounds()
+
+    def resize(self, width, height):
+        self.node_data['bounds']['width'] = width
+        self.node_data['bounds']['height'] = height
+        self.bounds = self.get_bounds()
+
+    def contains(self, other_node):
+        return self.bounds.contains(other_node.bounds)
+
+    def get_bounds(self):
+        coords = Coords(self.node_data['bounds']['x'], self.node_data['bounds']['y'])
+        bounds = Bounds(
+            coords,
+            self.node_data['bounds']['width'],
+            self.node_data['bounds']['height'],
+        )
+        return bounds
+
+    def clone(self):
+        return Node(self.node_id, self.node_data)
+
+    @property
+    def attributes(self):
+        return self.node_data['attributes']
+
+    @property
+    def as_dict(self):
+        return self.node_data
+
+    def __str__(self):
+        return f'{self.name} ({self.node_id})'
 
 
 class NodeConnection:
@@ -114,49 +168,6 @@ class NodeConnectionGraph:
 
     def connections_to_node(self, node):
         return [conn for conn in self.connections if conn.to_node == node]
-
-
-class Node:
-    def __init__(self, node_id, node_dict):
-        self.node_id = int(node_id)
-        self.key = str(self.node_id)
-        self.name = node_dict['name']
-        self.node_class = node_dict['class']['id']
-        self.node_type = NODE_CLASS_NAMES[self.node_class]
-        self.node_dict = node_dict
-        self.bounds = self.get_bounds()
-
-    def move_to(self, coords):
-        self.node_dict['bounds']['x'] = coords.x
-        self.node_dict['bounds']['y'] = coords.y
-        self.bounds = self.get_bounds()
-
-    def resize(self, width, height):
-        self.node_dict['bounds']['width'] = width
-        self.node_dict['bounds']['height'] = height
-        self.bounds = self.get_bounds()
-
-    def contains(self, other_node):
-        return self.bounds.contains(other_node.bounds)
-
-    def get_bounds(self):
-        bounds = Bounds(
-            Coords(self.node_dict['bounds']['x'], self.node_dict['bounds']['y']),
-            self.node_dict['bounds']['width'],
-            self.node_dict['bounds']['height'],
-        )
-        return bounds
-
-    @property
-    def attributes(self):
-        return self.node_dict['attributes']
-
-    @property
-    def as_dict(self):
-        return self.node_dict
-
-    def __str__(self):
-        return f'{self.name} ({self.node_id})'
 
 
 class WirePatch:
