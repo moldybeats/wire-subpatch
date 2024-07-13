@@ -106,27 +106,30 @@ class Node:
 
 
 class NodeConnection:
-    def __init__(self, from_node, from_output, to_node, to_input):
+    def __init__(self, from_node, outlet, to_node, inlet):
         self.from_node = from_node
-        self.from_output = from_output
+        self.outlet = outlet
         self.to_node = to_node
-        self.to_input = to_input
+        self.inlet = inlet
 
     @property
     def as_dict(self):
         return {
             'from': [
                 self.from_node.node_id,
-                self.from_output,
+                self.outlet,
             ],
             'to': [
                 self.to_node.node_id,
-                self.to_input,
+                self.inlet,
             ],
         }
 
+    def clone(self):
+        return NodeConnection(self.from_node, self.outlet, self.to_node, self.inlet)
+
     def __str__(self):
-        return f'{self.from_node}/{self.from_output} -> {self.to_node}/{self.to_input}'
+        return f'{self.from_node}/{self.outlet} -> {self.to_node}/{self.inlet}'
 
 
 class NodeConnectionGraph:
