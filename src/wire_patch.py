@@ -134,29 +134,29 @@ class NodeConnection:
 
 class NodeConnectionGraph:
     def __init__(self):
-        self.nodes = {}
+        self.node_map = {}
         self.connections = []
 
-    def add_node(self, node_id, node_dict):
-        node = Node(node_id, node_dict)
-        self.nodes[node.node_id] = node
-        return node
+    def add_node(self, node):
+        self.node_map[node.node_id] = node
 
-    def add_connection(self, from_node, from_output, to_node, to_input):
-        connection = NodeConnection(from_node, from_output, to_node, to_input)
+    def add_connection(self, connection):
         self.connections.append(connection)
-        return connection
 
     def remove_node(self, node):
         del self.nodes[node.node_id]
         self.connections = [c for c in self.connections if c.from_node != node and c.to_node != node]
 
     def get_node_by_id(self, node_id):
-        return self.nodes[node_id]
+        return self.node_map[node_id]
 
     @property
     def node_ids(self):
-        return list(self.nodes.keys())
+        return list(self.node_map.keys())
+
+    @property
+    def nodes(self):
+        return list(self.node_map.values())
 
     def is_connected(self, node1, node2):
         for conn in self.connections:
@@ -184,29 +184,32 @@ class WirePatch:
         self.node_graph = NodeConnectionGraph()
 
         nodes = patch_dict['patch']['nodes']
-        for node_id, node_dict in nodes.items():
-            self.node_graph.add_node(node_id, node_dict)
+        for node_id, node_data in nodes.items():
+            self.node_graph.add_node(Node(node_id, node_data))
 
         connections = patch_dict['patch']['connections']
         for connection in connections:
-            from_node_id = connection['from'][0]
-            from_output = connection['from'][1]
-            from_node = self.node_graph.get_node_by_id(from_node_id)
+            from_node = self.node_graph.get_node_by_id(connection['from'][0])
+            outlet = connection['from'][1]
 
-            to_node_id = connection['to'][0]
-            to_input = connection['to'][1]
-            to_node = self.node_graph.get_node_by_id(to_node_id)
+            to_node = self.node_graph.get_node_by_id(connection['to'][0])
+            inlet = connection['to'][1]
 
-            self.node_graph.add_connection(from_node, from_output, to_node, to_input)
+            connection = NodeConnection(from_node, outlet, to_node, inlet)
+            self.node_graph.add_connection(connection)
 
     def add_node(self, node, coords):
-        new_node = self.node_graph.add_node(self.next_node_id, node.node_dict)
+        new_node = node.clone()
         new_node.move_to(coords)
+        self.node_graph.add_node(new_node)
         self.next_node_id += 1
         return new_node
 
-    def add_connection(self, from_node, from_output, to_node, to_input):
-        return self.node_graph.add_connection(from_node, from_output, to_node, to_input)
+    def remove_node(self, node):
+        self.node_graph.remove_node(node)
+
+    def add_connection(self, connection):
+        return self.node_graph.add_connection(connection.clone())
 
     @property
     def as_dict(self):
@@ -217,7 +220,7 @@ class WirePatch:
                 'inputOrder': self.patch['inputOrder'],
                 'meta': self.patch['meta'],
                 'nextNodeId': self.next_node_id,
-                'nodes': {n.key: n.as_dict for n in self.node_graph.nodes.values()},
+                'nodes': {str(n.node_id): n.as_dict for n in self.node_graph.nodes},
                 'ui': self.patch['ui'],
             },
             'resources': self.resources,
