@@ -207,6 +207,23 @@ class SubpatchInjector:
 
         return height
 
+    def sort_vertically(self, nodes):
+        # Given a list of nodes, ensure they are ordered by their vertical
+        # position.
+        node_y_coords = {}
+        for node in nodes:
+            y = node.bounds.coords.y
+            if y not in node_y_coords:
+                node_y_coords[y] = []
+            node_y_coords[y].append(node)
+
+        sorted_y = sorted(node_y_coords.keys())
+        sorted_nodes = []
+        for y in sorted_y:
+            sorted_nodes += node_y_coords[y]
+
+        return sorted_nodes
+
     def inject_into(self, patch, coords):
         new_node_id_map = {}
 
@@ -220,7 +237,8 @@ class SubpatchInjector:
         next_node_id += 1
 
         xy = coords + self.input_node_column_bounds.coords
-        for node in self.subpatch.input_nodes:
+        input_nodes = self.sort_vertically(self.subpatch.input_nodes)
+        for node in input_nodes:
             new_node = Node(next_node_id, node.node_data)
             patch.add_node(new_node, xy)
             new_node_id_map[node.node_id] = new_node
@@ -235,7 +253,8 @@ class SubpatchInjector:
             next_node_id += 1
 
         xy = coords + self.output_node_column_bounds.coords
-        for node in self.subpatch.output_nodes:
+        output_nodes = self.sort_vertically(self.subpatch.output_nodes)
+        for node in output_nodes:
             new_node = Node(next_node_id, node.node_data)
             patch.add_node(new_node, xy)
             new_node_id_map[node.node_id] = new_node
