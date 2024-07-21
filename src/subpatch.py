@@ -240,6 +240,7 @@ class SubpatchInjector:
             patch.add_node(new_node, xy)
             new_node_id_map[node.node_id] = new_node
             xy += Coords(0.0, new_node.bounds.height + self.OUTPUT_NODE_VERT_SPACING)
+            next_node_id += 1
 
         for connection in self.subpatch.node_graph.connections:
             from_node = new_node_id_map[connection.from_node.node_id]
