@@ -30,10 +30,10 @@ class SubpatchContainerNode(Node):
         super().__init__(node.node_id, node.node_data)
 
         if self.node_class != COMMENT_NODE_CLASS:
-            raise InvalidContainerNode('Invalid container node: must be a Comment node')
+            raise InvalidContainerNodeException('Invalid container node: must be a Comment node')
 
         if not self.text.startswith(SubpatchContainerNode.COMMENT_PREFIX):
-            raise InvalidContainerNode('Invalid container node text')
+            raise InvalidContainerNodeException('Invalid container node text')
 
         lines = self.text.split('\n')
 
