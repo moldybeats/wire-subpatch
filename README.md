@@ -3,6 +3,8 @@ An experiment to try to emulate subpatching capabilities in Resolume Wire. Proba
 
 **NOTE: This is really just a proof of concept and is very experimental. There's a good chance it will corrupt your Wire patch files. Don't use it on anything important.**
 
+![Example subpatch](/assets/example.png)
+
 Here's how it works:
 - Inside a Wire patch, you define a subpatch by creating nodes within a Comment node. The text of the Comment node should start with **"Subpatch:"** followed by the name of your subpatch. You can put more details about the subpatch on the following lines. See the `examples` directory for some guidance.
 - Any Hub nodes that don't have an input connection will be considered subpatch inputs.
