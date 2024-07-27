@@ -514,7 +514,7 @@
 				}
 			},
 			"description": "",
-			"displayName": "ConstrainedVector2",
+			"displayName": "ConstrainedVector",
 			"identifier": "78d0cefe-b114-48ed-aa53-13937968edbc",
 			"licenseName": "",
 			"mail": "",
