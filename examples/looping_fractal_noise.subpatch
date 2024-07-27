@@ -1,6 +1,6 @@
 {
 	"name": "Looping Fractal Noise",
-	"description": "Uses 2 Fractal Noise nodes, crossfading between them to create a loop that lasts for `LoopDuration` seconds.\nTo create a perfect loop, both Fractal Noise nodes must be generating noise with exactly the same settings. Most of the node inputs are exposed as subpatch inputs and will control both nodes at once.",
+	"description": "Uses 2 Fractal Noise nodes, crossfading between them to create a loop that lasts for `LoopDuration` seconds.\nTo create a perfect loop, both Fractal Noise nodes must be generating noise with exactly the same settings. Most of the node inputs are exposed as subpatch inputs and will control both noise nodes at once.",
 	"subpatch_version": "0.0.1",
 	"connections": [
 		{
@@ -241,7 +241,7 @@
 				},
 				"text": {
 					"type": "string",
-					"value": "Subpatch: Looping Fractal Noise\nUses 2 Fractal Noise nodes, crossfading between them to create a loop that lasts for `LoopDuration` seconds.\nTo create a perfect loop, both Fractal Noise nodes must be generating noise with exactly the same settings. Most of the node inputs are exposed as subpatch inputs and will control both nodes at once."
+					"value": "Subpatch: Looping Fractal Noise\nUses 2 Fractal Noise nodes, crossfading between them to create a loop that lasts for `LoopDuration` seconds.\nTo create a perfect loop, both Fractal Noise nodes must be generating noise with exactly the same settings. Most of the node inputs are exposed as subpatch inputs and will control both noise nodes at once."
 				}
 			},
 			"bounds": {
@@ -338,7 +338,7 @@
 				},
 				"gain": {
 					"type": "float",
-					"value": 1
+					"value": 50
 				},
 				"modifier": {
 					"type": "integer",
@@ -490,7 +490,7 @@
 			"attributes": {
 				"flow": {
 					"type": "flow",
-					"value": "event"
+					"value": "signal"
 				},
 				"input0-dimensions": {
 					"type": "integer",
@@ -805,7 +805,7 @@
 			"attributes": {
 				"flow": {
 					"type": "flow",
-					"value": "event"
+					"value": "signal"
 				},
 				"input0-dimensions": {
 					"type": "integer",
@@ -854,7 +854,7 @@
 				},
 				"input0-type": {
 					"type": "type",
-					"value": "float"
+					"value": "trigger"
 				}
 			},
 			"bounds": {
@@ -871,8 +871,8 @@
 			"color": "ffff6a00",
 			"constants": {
 				"input0": {
-					"type": "float",
-					"value": 0
+					"type": "trigger",
+					"value": null
 				}
 			},
 			"hidden": [
@@ -928,7 +928,7 @@
 			"attributes": {
 				"flow": {
 					"type": "flow",
-					"value": "event"
+					"value": "signal"
 				},
 				"input0-dimensions": {
 					"type": "integer",
@@ -940,7 +940,7 @@
 				}
 			},
 			"bounds": {
-				"height": 29.786788940429688,
+				"height": 30,
 				"width": 195,
 				"x": 2695.775390625,
 				"y": 544.281494140625
@@ -969,7 +969,7 @@
 			"attributes": {
 				"flow": {
 					"type": "flow",
-					"value": "event"
+					"value": "signal"
 				},
 				"input0-dimensions": {
 					"type": "integer",
@@ -981,7 +981,7 @@
 				}
 			},
 			"bounds": {
-				"height": 29.786788940429688,
+				"height": 30,
 				"width": 195,
 				"x": 2695.775390625,
 				"y": 597.508056640625
@@ -1010,7 +1010,7 @@
 			"attributes": {
 				"flow": {
 					"type": "flow",
-					"value": "event"
+					"value": "signal"
 				},
 				"input0-dimensions": {
 					"type": "integer",
@@ -1022,7 +1022,7 @@
 				}
 			},
 			"bounds": {
-				"height": 29.786788940429688,
+				"height": 30,
 				"width": 195,
 				"x": 2695.775390625,
 				"y": 646.5994262695312
@@ -1051,7 +1051,7 @@
 			"attributes": {
 				"flow": {
 					"type": "flow",
-					"value": "event"
+					"value": "signal"
 				},
 				"input0-dimensions": {
 					"type": "integer",
@@ -1063,7 +1063,7 @@
 				}
 			},
 			"bounds": {
-				"height": 30.311656951904297,
+				"height": 30,
 				"width": 195,
 				"x": 2694.771728515625,
 				"y": 693.5968017578125
@@ -1092,7 +1092,7 @@
 			"attributes": {
 				"flow": {
 					"type": "flow",
-					"value": "event"
+					"value": "signal"
 				},
 				"input0-dimensions": {
 					"type": "integer",
@@ -1104,7 +1104,7 @@
 				}
 			},
 			"bounds": {
-				"height": 29.35742950439453,
+				"height": 30,
 				"width": 195,
 				"x": 2694.6025390625,
 				"y": 745.2234497070312
@@ -1153,7 +1153,7 @@
 				}
 			},
 			"bounds": {
-				"height": 107.57777404785156,
+				"height": 106,
 				"width": 195,
 				"x": 4226.78662109375,
 				"y": 491.1464538574219

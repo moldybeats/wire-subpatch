@@ -1,0 +1,1079 @@
+{
+	"name": "Random Walker",
+	"description": "",
+	"subpatch_version": "0.0.1",
+	"connections": [
+		{
+			"from": [
+				1,
+				"output"
+			],
+			"to": [
+				15,
+				"input0"
+			]
+		},
+		{
+			"from": [
+				16,
+				"trigger"
+			],
+			"to": [
+				1,
+				"input"
+			]
+		},
+		{
+			"from": [
+				15,
+				"output0"
+			],
+			"to": [
+				18,
+				"input"
+			]
+		},
+		{
+			"from": [
+				19,
+				"aspectratio"
+			],
+			"to": [
+				2,
+				"input0"
+			]
+		},
+		{
+			"from": [
+				2,
+				"output0"
+			],
+			"to": [
+				3,
+				"input0"
+			]
+		},
+		{
+			"from": [
+				19,
+				"aspectratio"
+			],
+			"to": [
+				4,
+				"input0"
+			]
+		},
+		{
+			"from": [
+				5,
+				"output0"
+			],
+			"to": [
+				16,
+				"frequency"
+			]
+		},
+		{
+			"from": [
+				6,
+				"output0"
+			],
+			"to": [
+				8,
+				"input0"
+			]
+		},
+		{
+			"from": [
+				7,
+				"output0"
+			],
+			"to": [
+				9,
+				"input0"
+			]
+		},
+		{
+			"from": [
+				8,
+				"output0"
+			],
+			"to": [
+				10,
+				"input0"
+			]
+		},
+		{
+			"from": [
+				9,
+				"output0"
+			],
+			"to": [
+				10,
+				"input1"
+			]
+		},
+		{
+			"from": [
+				6,
+				"output0"
+			],
+			"to": [
+				11,
+				"input0"
+			]
+		},
+		{
+			"from": [
+				7,
+				"output0"
+			],
+			"to": [
+				11,
+				"input1"
+			]
+		},
+		{
+			"from": [
+				10,
+				"output"
+			],
+			"to": [
+				1,
+				"argument1"
+			]
+		},
+		{
+			"from": [
+				11,
+				"output"
+			],
+			"to": [
+				1,
+				"argument2"
+			]
+		},
+		{
+			"from": [
+				17,
+				"output0"
+			],
+			"to": [
+				12,
+				"input0"
+			]
+		},
+		{
+			"from": [
+				12,
+				"output0"
+			],
+			"to": [
+				15,
+				"reset"
+			]
+		},
+		{
+			"from": [
+				13,
+				"output0"
+			],
+			"to": [
+				1,
+				"instances"
+			]
+		},
+		{
+			"from": [
+				3,
+				"output"
+			],
+			"to": [
+				18,
+				"min"
+			]
+		},
+		{
+			"from": [
+				4,
+				"output"
+			],
+			"to": [
+				18,
+				"max"
+			]
+		},
+		{
+			"from": [
+				18,
+				"output0"
+			],
+			"to": [
+				14,
+				"input0"
+			]
+		}
+	],
+	"nodes": {
+		"0": {
+			"attributes": {
+				"alignment": {
+					"type": "integer",
+					"value": 0
+				},
+				"fill": {
+					"type": "bool",
+					"value": false
+				},
+				"font-size": {
+					"type": "float",
+					"value": 19
+				},
+				"text": {
+					"type": "string",
+					"value": "Subpatch: Random Walker"
+				}
+			},
+			"bounds": {
+				"height": 840.8007202148438,
+				"width": 1802.56884765625,
+				"x": -241.9426727294922,
+				"y": -63.68663024902344
+			},
+			"class": {
+				"id": "77697265-3C1D-467D-A722-0FC566538374",
+				"version": 1
+			},
+			"clock": "video",
+			"color": "ffd0c117",
+			"constants": {},
+			"hidden": [
+				"text",
+				"alignment",
+				"font-size",
+				"fill"
+			],
+			"name": "Comment",
+			"thumbnail_visible": true
+		},
+		"1": {
+			"attributes": {
+				"distribution": {
+					"type": "integer",
+					"value": 0
+				},
+				"instances": {
+					"type": "integer",
+					"value": 1
+				},
+				"type": {
+					"type": "type",
+					"value": "float2"
+				}
+			},
+			"bounds": {
+				"height": 106,
+				"width": 195,
+				"x": 549.96142578125,
+				"y": 23.068115234375
+			},
+			"class": {
+				"id": "77697265-5581-4721-8519-0b8fa3d68b4d",
+				"version": 2
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"argument1": {
+					"type": "float2",
+					"value": [
+						-0.5,
+						-0.5
+					]
+				},
+				"argument2": {
+					"type": "float2",
+					"value": [
+						0.5,
+						0.5
+					]
+				},
+				"input": {
+					"type": "trigger",
+					"value": null
+				},
+				"precision": {
+					"type": "float2",
+					"value": [
+						0.00999999977648258,
+						0.00999999977648258
+					]
+				},
+				"seed": {
+					"type": "integer",
+					"value": 0
+				}
+			},
+			"hidden": [
+				"distribution",
+				"seed",
+				"precision",
+				"type"
+			],
+			"name": "Random",
+			"thumbnail_visible": true
+		},
+		"2": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "signal"
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "float"
+				}
+			},
+			"bounds": {
+				"height": 30,
+				"width": 195,
+				"x": 549.96142578125,
+				"y": 555.068115234375
+			},
+			"class": {
+				"id": "77697265-1296-4264-A646-5CE3BE529286",
+				"version": 1
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions"
+			],
+			"name": "Negate",
+			"thumbnail_visible": true
+		},
+		"3": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "signal"
+				},
+				"instances": {
+					"type": "integer",
+					"value": 1
+				}
+			},
+			"bounds": {
+				"height": 82,
+				"width": 195,
+				"x": 804.96142578125,
+				"y": 555.068115234375
+			},
+			"class": {
+				"id": "77697265-E7EF-4944-8FC2-D808EE0433CB",
+				"version": 1
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0
+				},
+				"input1": {
+					"type": "float",
+					"value": -1
+				}
+			},
+			"hidden": [
+				"flow",
+				"instances"
+			],
+			"name": "Float2",
+			"thumbnail_visible": true
+		},
+		"4": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "signal"
+				},
+				"instances": {
+					"type": "integer",
+					"value": 1
+				}
+			},
+			"bounds": {
+				"height": 82,
+				"width": 195,
+				"x": 804.96142578125,
+				"y": 667.068115234375
+			},
+			"class": {
+				"id": "77697265-E7EF-4944-8FC2-D808EE0433CB",
+				"version": 1
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0
+				},
+				"input1": {
+					"type": "float",
+					"value": 1
+				}
+			},
+			"hidden": [
+				"flow",
+				"instances"
+			],
+			"name": "Float2",
+			"thumbnail_visible": true
+		},
+		"5": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "signal"
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "float"
+				}
+			},
+			"bounds": {
+				"height": 30,
+				"width": 195,
+				"x": -214.5204315185547,
+				"y": 76.068115234375
+			},
+			"class": {
+				"id": "77697265-AEE3-4B9D-BBD5-6Ae4CCD5aB30",
+				"version": 2
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions"
+			],
+			"name": "MetronomeFreq",
+			"thumbnail_visible": true
+		},
+		"6": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "event"
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "float"
+				}
+			},
+			"bounds": {
+				"height": 30,
+				"width": 195,
+				"x": -215.03857421875,
+				"y": 183.068115234375
+			},
+			"class": {
+				"id": "77697265-AEE3-4B9D-BBD5-6Ae4CCD5aB30",
+				"version": 2
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0.5
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions"
+			],
+			"name": "RangeX",
+			"thumbnail_visible": true
+		},
+		"7": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "event"
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "float"
+				}
+			},
+			"bounds": {
+				"height": 30,
+				"width": 195,
+				"x": -215.03857421875,
+				"y": 271.068115234375
+			},
+			"class": {
+				"id": "77697265-AEE3-4B9D-BBD5-6Ae4CCD5aB30",
+				"version": 2
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0.5
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions"
+			],
+			"name": "RangeY",
+			"thumbnail_visible": true
+		},
+		"8": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "event"
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "float"
+				}
+			},
+			"bounds": {
+				"height": 30,
+				"width": 195,
+				"x": 39.96142578125,
+				"y": 183.068115234375
+			},
+			"class": {
+				"id": "77697265-1296-4264-A646-5CE3BE529286",
+				"version": 1
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0.5
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions"
+			],
+			"name": "Negate",
+			"thumbnail_visible": true
+		},
+		"9": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "event"
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "float"
+				}
+			},
+			"bounds": {
+				"height": 30,
+				"width": 195,
+				"x": 39.96142578125,
+				"y": 235.11280822753906
+			},
+			"class": {
+				"id": "77697265-1296-4264-A646-5CE3BE529286",
+				"version": 1
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0.5
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions"
+			],
+			"name": "Negate",
+			"thumbnail_visible": true
+		},
+		"10": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "event"
+				},
+				"instances": {
+					"type": "integer",
+					"value": 1
+				}
+			},
+			"bounds": {
+				"height": 82,
+				"width": 195,
+				"x": 294.96142578125,
+				"y": 183.068115234375
+			},
+			"class": {
+				"id": "77697265-E7EF-4944-8FC2-D808EE0433CB",
+				"version": 1
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": -0.5
+				},
+				"input1": {
+					"type": "float",
+					"value": -0.5
+				}
+			},
+			"hidden": [
+				"flow",
+				"instances"
+			],
+			"name": "RangeMin",
+			"thumbnail_visible": true
+		},
+		"11": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "event"
+				},
+				"instances": {
+					"type": "integer",
+					"value": 1
+				}
+			},
+			"bounds": {
+				"height": 82,
+				"width": 195,
+				"x": 294.96142578125,
+				"y": 295.068115234375
+			},
+			"class": {
+				"id": "77697265-E7EF-4944-8FC2-D808EE0433CB",
+				"version": 1
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float",
+					"value": 0.5
+				},
+				"input1": {
+					"type": "float",
+					"value": 0.5
+				}
+			},
+			"hidden": [
+				"flow",
+				"instances"
+			],
+			"name": "RangeMax",
+			"thumbnail_visible": true
+		},
+		"12": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "event"
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "trigger"
+				}
+			},
+			"bounds": {
+				"height": 30,
+				"width": 195,
+				"x": 549.96142578125,
+				"y": 467.068115234375
+			},
+			"class": {
+				"id": "77697265-AEE3-4B9D-BBD5-6Ae4CCD5aB30",
+				"version": 2
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "trigger",
+					"value": null
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions"
+			],
+			"name": "Reset",
+			"thumbnail_visible": true
+		},
+		"13": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "attribute"
+				},
+				"input0": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "integer"
+				}
+			},
+			"bounds": {
+				"height": 30,
+				"width": 195,
+				"x": -214.00228881835938,
+				"y": 407.068115234375
+			},
+			"class": {
+				"id": "77697265-AEE3-4B9D-BBD5-6Ae4CCD5aB30",
+				"version": 2
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions"
+			],
+			"name": "Instances",
+			"thumbnail_visible": true
+		},
+		"14": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "signal"
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "float2"
+				}
+			},
+			"bounds": {
+				"height": 30,
+				"width": 195,
+				"x": 1331.4144287109375,
+				"y": 22.375320434570312
+			},
+			"class": {
+				"id": "77697265-AEE3-4B9D-BBD5-6Ae4CCD5aB30",
+				"version": 2
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float2",
+					"value": [
+						0,
+						0
+					]
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions"
+			],
+			"name": "XY",
+			"thumbnail_visible": true
+		},
+		"15": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "event"
+				},
+				"input0-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input0-type": {
+					"type": "type",
+					"value": "float2"
+				},
+				"send_on_reset": {
+					"type": "bool",
+					"value": true
+				}
+			},
+			"bounds": {
+				"height": 58,
+				"width": 195,
+				"x": 804.96142578125,
+				"y": 23.068115234375
+			},
+			"class": {
+				"id": "77697265-270B-46DD-B8E0-8A823CF161BC",
+				"version": 2
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "float2",
+					"value": [
+						-0.17000000178813934,
+						0.26999998092651367
+					]
+				},
+				"reset": {
+					"type": "trigger",
+					"value": null
+				}
+			},
+			"hidden": [
+				"input0-type",
+				"flow",
+				"input0-dimensions",
+				"send_on_reset"
+			],
+			"name": "Accumulate",
+			"thumbnail_visible": true
+		},
+		"16": {
+			"attributes": {
+				"instances": {
+					"type": "integer",
+					"value": 1
+				}
+			},
+			"bounds": {
+				"height": 130,
+				"width": 195,
+				"x": 294.96142578125,
+				"y": 23.068115234375
+			},
+			"class": {
+				"id": "77697265-FD65-470F-9F75-ED878267980E",
+				"version": 1
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"enabled": {
+					"type": "bool",
+					"value": true
+				},
+				"frequency": {
+					"type": "float",
+					"value": 1
+				},
+				"reset": {
+					"type": "trigger",
+					"value": null
+				}
+			},
+			"hidden": [
+				"instances",
+				"count"
+			],
+			"name": "Metronome",
+			"thumbnail_visible": true
+		},
+		"17": {
+			"attributes": {
+				"instances": {
+					"type": "integer",
+					"value": 1
+				}
+			},
+			"bounds": {
+				"height": 58,
+				"width": 195,
+				"x": -214.00228881835938,
+				"y": 465.47760009765625
+			},
+			"class": {
+				"id": "77697265-69d4-4a91-8d4e-21a342c9a121",
+				"version": 1
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input0": {
+					"type": "trigger",
+					"value": null
+				}
+			},
+			"hidden": [
+				"instances"
+			],
+			"name": "Reset",
+			"thumbnail_visible": true
+		},
+		"18": {
+			"attributes": {
+				"flow": {
+					"type": "flow",
+					"value": "signal"
+				},
+				"input-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"input-type": {
+					"type": "type",
+					"value": "float2"
+				},
+				"max-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"max-type": {
+					"type": "type",
+					"value": "float2"
+				},
+				"min-dimensions": {
+					"type": "integer",
+					"value": 1
+				},
+				"min-type": {
+					"type": "type",
+					"value": "float2"
+				}
+			},
+			"bounds": {
+				"height": 82,
+				"width": 195,
+				"x": 1059.96142578125,
+				"y": 23.068115234375
+			},
+			"class": {
+				"id": "77697265-FD4A-443B-89F6-7FFABC07EDAB",
+				"version": 1
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {
+				"input": {
+					"type": "float2",
+					"value": [
+						-1.4500000476837158,
+						0.12000000476837158
+					]
+				},
+				"max": {
+					"type": "float2",
+					"value": [
+						1,
+						1
+					]
+				},
+				"min": {
+					"type": "float2",
+					"value": [
+						0,
+						0
+					]
+				}
+			},
+			"hidden": [
+				"input-type",
+				"min-type",
+				"max-type",
+				"flow",
+				"input-dimensions",
+				"min-dimensions",
+				"max-dimensions"
+			],
+			"name": "Wrap",
+			"thumbnail_visible": true
+		},
+		"19": {
+			"attributes": {},
+			"bounds": {
+				"height": 130,
+				"width": 195,
+				"x": 294.96142578125,
+				"y": 555.068115234375
+			},
+			"class": {
+				"id": "77697265-ec64-44f7-b446-de2a0220c5b8",
+				"version": 0
+			},
+			"clock": "video",
+			"color": "ffff6a00",
+			"constants": {},
+			"hidden": [],
+			"name": "Patch Info",
+			"thumbnail_visible": true
+		}
+	}
+}
